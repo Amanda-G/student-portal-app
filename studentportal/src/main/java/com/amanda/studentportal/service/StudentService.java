@@ -3,8 +3,11 @@ package com.amanda.studentportal.service;
 import com.amanda.studentportal.dto.CourseSummary;
 import com.amanda.studentportal.dto.StudentRequest;
 import com.amanda.studentportal.dto.StudentResponse;
+import com.amanda.studentportal.entity.Course;
 import com.amanda.studentportal.entity.Student;
+import com.amanda.studentportal.exception.ConflictException;
 import com.amanda.studentportal.exception.NotFoundException;
+import com.amanda.studentportal.repository.CourseRepository;
 import com.amanda.studentportal.repository.StudentRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class StudentService {
 
   private final StudentRepository studentRepository;
+  private final CourseRepository courseRepository;
 
   public List<StudentResponse> getStudents(String search) {
     List<Student> students;
@@ -50,6 +54,20 @@ public class StudentService {
   public void deleteStudent(Long id) {
     Student student = findStudent(id);
     studentRepository.delete(student);
+  }
+
+  @Transactional
+  public StudentResponse enrollCourse(Long studentId, Long courseId) {
+    Student student = findStudent(studentId);
+    Course course = courseRepository.findById(courseId)
+        .orElseThrow(() -> new NotFoundException("Course not found with id " + courseId));
+    boolean alreadyEnrolled = student.getCourses().contains(course);
+    if (alreadyEnrolled) {
+      throw new ConflictException("Student is already enrolled in this course");
+    }
+    student.getCourses().add(course);
+    studentRepository.save(student);
+    return toResponse(student);
   }
 
   private Student findStudent(Long id) {
