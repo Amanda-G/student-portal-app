@@ -17,7 +17,6 @@ public class StudentService {
 
   private final StudentRepository studentRepository;
 
-  @Transactional(readOnly = true)
   public List<StudentResponse> getStudents(String search) {
     List<Student> students;
     if (search == null || search.isBlank()) {
@@ -29,18 +28,28 @@ public class StudentService {
     return students.stream().map(this::toResponse).toList();
   }
 
-  @Transactional(readOnly = true)
   public StudentResponse getStudent(Long id) {
     Student student = findStudent(id);
     return toResponse(student);
   }
 
-  @Transactional
   public StudentResponse createStudent(StudentRequest request) {
     Student student = new Student();
     applyRequest(student, request);
-    Student savedStudent = studentRepository.save(student);
-    return toResponse(savedStudent);
+    Student save = studentRepository.save(student);
+    return toResponse(save);
+  }
+
+  public StudentResponse updateStudent(Long id, StudentRequest request) {
+    Student student = findStudent(id);
+    applyRequest(student, request);
+    studentRepository.save(student); // we can also use transactional annotation instead to call save here.
+    return toResponse(student);
+  }
+
+  public void deleteStudent(Long id) {
+    Student student = findStudent(id);
+    studentRepository.delete(student);
   }
 
   private Student findStudent(Long id) {

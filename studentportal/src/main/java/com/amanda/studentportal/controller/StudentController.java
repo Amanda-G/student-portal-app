@@ -44,4 +44,15 @@ public class StudentController {
     public StudentResponse createStudent(@Valid @RequestBody StudentRequest request) {
         return studentService.createStudent(request);
     }
+
+    @PutMapping("/{id}")
+    public StudentResponse updateStudent(@PathVariable Long id, @Valid @RequestBody StudentRequest request) {
+        return studentService.updateStudent(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
+    }
 }
