@@ -5,6 +5,7 @@ import com.amanda.studentportal.service.CourseService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,5 +24,11 @@ public class CourseController {
     public ResponseEntity<List<CourseResponse>> getCourses(@RequestParam(required = false) String search) {
         List<CourseResponse> courses = courseService.getCourses(search);
         return ResponseEntity.ok(courses);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseResponse> getCourse(@PathVariable Long id) {
+        CourseResponse course = courseService.getCourse(id);
+        return ResponseEntity.ok(course);
     }
 }

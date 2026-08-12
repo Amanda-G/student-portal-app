@@ -3,6 +3,7 @@ package com.amanda.studentportal.service;
 import com.amanda.studentportal.dto.CourseResponse;
 import com.amanda.studentportal.dto.StudentSummary;
 import com.amanda.studentportal.entity.Course;
+import com.amanda.studentportal.exception.NotFoundException;
 import com.amanda.studentportal.repository.CourseRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,16 @@ public class CourseService {
           .findByCourseCodeContainingIgnoreCaseOrCourseNameContainingIgnoreCase(search, search);
     }
     return courses.stream().map(this::toResponse).toList();
+  }
+
+  public CourseResponse getCourse(Long id) {
+    Course course = findCourse(id);
+    return toResponse(course);
+  }
+
+  private Course findCourse(Long id) {
+    return courseRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Course not found with id " + id));
   }
 
   private CourseResponse toResponse(Course course) {
