@@ -1,8 +1,10 @@
 package com.amanda.studentportal.service;
 
+import com.amanda.studentportal.dto.CourseRequest;
 import com.amanda.studentportal.dto.CourseResponse;
 import com.amanda.studentportal.dto.StudentSummary;
 import com.amanda.studentportal.entity.Course;
+import com.amanda.studentportal.exception.ConflictException;
 import com.amanda.studentportal.exception.NotFoundException;
 import com.amanda.studentportal.repository.CourseRepository;
 import java.util.List;
@@ -24,6 +26,19 @@ public class CourseService {
           .findByCourseCodeContainingIgnoreCaseOrCourseNameContainingIgnoreCase(search, search);
     }
     return courses.stream().map(this::toResponse).toList();
+  }
+
+  public CourseResponse createCourse(CourseRequest request) {
+    boolean codeTaken = courseRepository.existsByCourseCodeIgnoreCase(request.courseCode());
+    if (codeTaken) {
+      throw new ConflictException("Course code " + request.courseCode() + " already exists");
+    }
+    Course course = new Course();
+    course.setCourseCode(request.courseCode());
+    course.setCourseName(request.courseName());
+    course.setDescription(request.description());
+    Course saved = courseRepository.save(course);
+    return toResponse(saved);
   }
 
   public CourseResponse getCourse(Long id) {
