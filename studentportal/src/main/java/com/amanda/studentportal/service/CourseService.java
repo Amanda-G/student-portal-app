@@ -41,6 +41,19 @@ public class CourseService {
     return toResponse(saved);
   }
 
+  public CourseResponse updateCourse(Long id, CourseRequest request) {
+    Course course = findCourse(id);
+    boolean codeTaken = courseRepository.existsByCourseCodeIgnoreCaseAndIdNot(request.courseCode(), id);
+    if (codeTaken) {
+      throw new ConflictException("Course code " + request.courseCode() + " already exists");
+    }
+    course.setCourseCode(request.courseCode());
+    course.setCourseName(request.courseName());
+    course.setDescription(request.description());
+    courseRepository.save(course);
+    return toResponse(course);
+  }
+
   public CourseResponse getCourse(Long id) {
     Course course = findCourse(id);
     return toResponse(course);
