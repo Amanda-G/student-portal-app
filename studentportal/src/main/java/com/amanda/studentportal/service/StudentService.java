@@ -70,6 +70,20 @@ public class StudentService {
     return toResponse(student);
   }
 
+  @Transactional
+  public StudentResponse removeCourse(Long studentId, Long courseId) {
+    Student student = findStudent(studentId);
+    Course course = courseRepository.findById(courseId)
+        .orElseThrow(() -> new NotFoundException("Course not found with id " + courseId));
+    boolean enrolled = student.getCourses().contains(course);
+    if (!enrolled) {
+      throw new NotFoundException("Student is not enrolled in this course");
+    }
+    student.getCourses().remove(course);
+    studentRepository.save(student);
+    return toResponse(student);
+  }
+
   private Student findStudent(Long id) {
     return studentRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Student not found with id " + id));

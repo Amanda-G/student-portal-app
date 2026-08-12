@@ -47,6 +47,13 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
+    @DeleteMapping("/{studentId}/courses/{courseId}")
+    public ResponseEntity<StudentResponse> removeCourse(@PathVariable Long studentId,
+            @PathVariable Long courseId) {
+        StudentResponse student = studentService.removeCourse(studentId, courseId);
+        return ResponseEntity.ok(student);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public StudentResponse createStudent(@Valid @RequestBody StudentRequest request) {
