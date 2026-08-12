@@ -29,6 +29,15 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @GetMapping
+    public List<StudentResponse> getStudents(@RequestParam(required = false) String search) {
+        return studentService.getStudents(search);
+    }
+
+    @GetMapping("/{id}")
+    public StudentResponse getStudent(@PathVariable Long id) {
+        return studentService.getStudent(id);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

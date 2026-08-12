@@ -17,12 +17,35 @@ public class StudentService {
 
   private final StudentRepository studentRepository;
 
+  @Transactional(readOnly = true)
+  public List<StudentResponse> getStudents(String search) {
+    List<Student> students;
+    if (search == null || search.isBlank()) {
+      students = studentRepository.findAll();
+    } else {
+      students = studentRepository
+          .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(search, search);
+    }
+    return students.stream().map(this::toResponse).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public StudentResponse getStudent(Long id) {
+    Student student = findStudent(id);
+    return toResponse(student);
+  }
+
   @Transactional
   public StudentResponse createStudent(StudentRequest request) {
     Student student = new Student();
     applyRequest(student, request);
     Student savedStudent = studentRepository.save(student);
     return toResponse(savedStudent);
+  }
+
+  private Student findStudent(Long id) {
+    return studentRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Student not found with id " + id));
   }
 
   private void applyRequest(Student student, StudentRequest request) {
