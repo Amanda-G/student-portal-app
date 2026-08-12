@@ -59,6 +59,14 @@ public class CourseService {
     return toResponse(course);
   }
 
+  public void deleteCourse(Long id) {
+    Course course = findCourse(id);
+    if (!course.getStudents().isEmpty()) {
+      throw new ConflictException("Course cannot be deleted while students are enrolled");
+    }
+    courseRepository.delete(course);
+  }
+
   private Course findCourse(Long id) {
     return courseRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Course not found with id " + id));
