@@ -1,0 +1,21 @@
+.app-toolbar {
+  .app-title {
+    color: inherit;
+    text-decoration: none;
+    font-size: 1.2rem;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .active-link {
+    font-weight: bold;
+  }
+}
+
+.content {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
