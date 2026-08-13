@@ -1,0 +1,34 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.search-field {
+  width: 320px;
+}
+
+.spinner-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.empty-state {
+  color: rgba(0, 0, 0, 0.55);
+  padding: 24px 0;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+
+  td a {
+    color: inherit;
+  }
+}
