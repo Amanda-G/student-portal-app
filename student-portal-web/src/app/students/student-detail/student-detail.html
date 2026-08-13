@@ -1,1 +1,76 @@
-<p>student-detail works!</p>
+@if (loading()) {
+  <div class="spinner-wrap">
+    <mat-spinner diameter="36" />
+  </div>
+} @else if (student(); as s) {
+  <div class="page-header">
+    <h1>{{ s.firstName }} {{ s.lastName }}</h1>
+    <div class="header-actions">
+      <a mat-stroked-button [routerLink]="['/students', s.id, 'edit']">Edit</a>
+      <button mat-stroked-button (click)="deleteStudent()">Delete</button>
+    </div>
+  </div>
+
+  <mat-tab-group>
+    <mat-tab label="Info">
+      <mat-card class="info-card">
+        <mat-card-content>
+          <dl>
+            <dt>Email</dt>
+            <dd>{{ s.email }}</dd>
+            <dt>Date of Birth</dt>
+            <dd>{{ s.dateOfBirth | date: 'mediumDate' }}</dd>
+            <dt>Enrolled Courses</dt>
+            <dd>{{ s.courses.length }}</dd>
+          </dl>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Enrolled Courses ({{ s.courses.length }})">
+      <div class="enroll-row">
+        <mat-form-field appearance="outline" class="course-select">
+          <mat-label>Enroll in a course</mat-label>
+          <mat-select [(ngModel)]="selectedCourseId">
+            @for (course of availableCourses(); track course.id) {
+              <mat-option [value]="course.id">{{ course.courseCode }} - {{ course.courseName }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button (click)="enroll()" [disabled]="enrolling() || !selectedCourseId">
+          {{ enrolling() ? 'Enrolling...' : 'Enroll' }}
+        </button>
+      </div>
+
+      @if (s.courses.length === 0) {
+        <p class="empty-state">No courses enrolled</p>
+      } @else {
+        <table mat-table [dataSource]="s.courses" class="mat-elevation-z1">
+          <ng-container matColumnDef="courseCode">
+            <th mat-header-cell *matHeaderCellDef>Code</th>
+            <td mat-cell *matCellDef="let course">{{ course.courseCode }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="courseName">
+            <th mat-header-cell *matHeaderCellDef>Course Name</th>
+            <td mat-cell *matCellDef="let course">
+              <a [routerLink]="['/courses', course.id]">{{ course.courseName }}</a>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let course">
+              <button mat-icon-button (click)="removeCourse(course)" aria-label="Remove course">
+                <mat-icon>close</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      }
+    </mat-tab>
+  </mat-tab-group>
+}
