@@ -1,1 +1,35 @@
-<p>course-form works!</p>
+<h1>{{ courseId ? 'Edit Course' : 'Add Course' }}</h1>
+
+<mat-card class="form-card">
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <mat-form-field appearance="outline">
+        <mat-label>Course Code</mat-label>
+        <input matInput formControlName="courseCode" placeholder="e.g. CS101" />
+        @if (errorFor('courseCode'); as error) {
+          <mat-error>{{ error }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Course Name</mat-label>
+        <input matInput formControlName="courseName" />
+        @if (errorFor('courseName'); as error) {
+          <mat-error>{{ error }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="3"></textarea>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <a mat-button routerLink="/courses">Cancel</a>
+        <button mat-flat-button type="submit" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

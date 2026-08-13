@@ -1,1 +1,59 @@
-<p>course-list works!</p>
+<div class="page-header">
+  <h1>Courses</h1>
+  <a mat-flat-button routerLink="/courses/new">Add Course</a>
+</div>
+
+<mat-form-field appearance="outline" class="search-field">
+  <mat-label>Search by code or name</mat-label>
+  <input matInput [formControl]="search" placeholder="e.g. CS101" />
+</mat-form-field>
+
+@if (loading()) {
+  <div class="spinner-wrap">
+    <mat-spinner diameter="36" />
+  </div>
+} @else if (courses().length === 0) {
+  <p class="empty-state">No courses found</p>
+} @else {
+  <table mat-table [dataSource]="courses()" class="mat-elevation-z1">
+    <ng-container matColumnDef="courseCode">
+      <th mat-header-cell *matHeaderCellDef>Code</th>
+      <td mat-cell *matCellDef="let course">
+        <a [routerLink]="['/courses', course.id]">{{ course.courseCode }}</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="courseName">
+      <th mat-header-cell *matHeaderCellDef>Course Name</th>
+      <td mat-cell *matCellDef="let course">{{ course.courseName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let course">{{ course.description }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="students">
+      <th mat-header-cell *matHeaderCellDef>Students</th>
+      <td mat-cell *matCellDef="let course">{{ course.students.length }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let course">
+        <a mat-icon-button [routerLink]="['/courses', course.id]" aria-label="View course">
+          <mat-icon>visibility</mat-icon>
+        </a>
+        <a mat-icon-button [routerLink]="['/courses', course.id, 'edit']" aria-label="Edit course">
+          <mat-icon>edit</mat-icon>
+        </a>
+        <button mat-icon-button (click)="deleteCourse(course)" aria-label="Delete course">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+}
