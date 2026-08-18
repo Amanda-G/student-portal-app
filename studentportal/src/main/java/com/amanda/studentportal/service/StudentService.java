@@ -47,7 +47,8 @@ public class StudentService {
   public StudentResponse updateStudent(Long id, StudentRequest request) {
     Student student = findStudent(id);
     applyRequest(student, request);
-    studentRepository.save(student); // we can also use transactional annotation instead to call save here.
+    studentRepository.save(
+        student); // we can also use transactional annotation instead to call save here.
     return toResponse(student);
   }
 
@@ -56,7 +57,8 @@ public class StudentService {
     studentRepository.delete(student);
   }
 
-  @Transactional
+  @Transactional // because of multiple database transactions all - or - none
+  // and we are using contains to see if course is in student.courses and with transactional it will return same object and dont have to override toEquals
   public StudentResponse enrollCourse(Long studentId, Long courseId) {
     Student student = findStudent(studentId);
     Course course = courseRepository.findById(courseId)
@@ -66,7 +68,7 @@ public class StudentService {
       throw new ConflictException("Student is already enrolled in this course");
     }
     student.getCourses().add(course);
-    studentRepository.save(student);
+//    studentRepository.save(student);
     return toResponse(student);
   }
 
@@ -80,7 +82,7 @@ public class StudentService {
       throw new NotFoundException("Student is not enrolled in this course");
     }
     student.getCourses().remove(course);
-    studentRepository.save(student);
+//    studentRepository.save(student); // save is redundant as we are not using @Transactional
     return toResponse(student);
   }
 
