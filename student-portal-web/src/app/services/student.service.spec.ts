@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
 
-import { StudentService } from './student.service';
+import {StudentService} from './student.service';
 
 describe('StudentService', () => {
   let service: StudentService;

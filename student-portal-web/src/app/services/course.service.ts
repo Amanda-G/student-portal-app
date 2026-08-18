@@ -1,9 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Course, CourseRequest } from '../models/course';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {inject, Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Course, CourseRequest} from '../models/course';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class CourseService {
   private http = inject(HttpClient);
   private baseUrl = 'http://localhost:8080/api/courses';
@@ -13,7 +13,7 @@ export class CourseService {
     if (search) {
       params = params.set('search', search);
     }
-    return this.http.get<Course[]>(this.baseUrl, { params });
+    return this.http.get<Course[]>(this.baseUrl, {params});
   }
 
   getCourse(id: number): Observable<Course> {

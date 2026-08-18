@@ -27,8 +27,13 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/api/students?search=john",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "students"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "students"
+              ],
               "query": [
                 {
                   "key": "search",
@@ -140,8 +145,13 @@
             "method": "GET",
             "url": {
               "raw": "{{baseUrl}}/api/courses?search=math",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "courses"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "courses"
+              ],
               "query": [
                 {
                   "key": "search",

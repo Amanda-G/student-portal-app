@@ -10,9 +10,9 @@ import com.amanda.studentportal.dto.StudentResponse;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -50,7 +50,8 @@ class ApiIntegrationTest {
   @Test
   void createStudentReturns201() {
     // Arrange
-    StudentRequest request = new StudentRequest("Test", "User", "test.user@gmail.com", LocalDate.of(2002, 1, 1));
+    StudentRequest request = new StudentRequest("Test", "User", "test.user@gmail.com",
+        LocalDate.of(2002, 1, 1));
 
     // Act
     ResponseEntity<StudentResponse> response =
@@ -66,7 +67,8 @@ class ApiIntegrationTest {
   @Test
   void createStudentFailsValidation() {
     // Arrange
-    StudentRequest request = new StudentRequest("", "User", "not-an-email", LocalDate.of(2030, 1, 1));
+    StudentRequest request = new StudentRequest("", "User", "not-an-email",
+        LocalDate.of(2030, 1, 1));
 
     // Act
     ResponseEntity<String> response =
@@ -81,7 +83,8 @@ class ApiIntegrationTest {
   @Test
   void enrollAndRemoveCourse() {
     // Arrange
-    StudentRequest request = new StudentRequest("Enroll", "Tester", "enroll.tester@gmail.com", LocalDate.of(2002, 1, 1));
+    StudentRequest request = new StudentRequest("Enroll", "Tester", "enroll.tester@gmail.com",
+        LocalDate.of(2002, 1, 1));
     ResponseEntity<StudentResponse> created =
         restTemplate.postForEntity("/api/students", request, StudentResponse.class);
     Long studentId = created.getBody().id();

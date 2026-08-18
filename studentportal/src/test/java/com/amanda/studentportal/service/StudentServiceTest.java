@@ -52,7 +52,8 @@ class StudentServiceTest {
   @Test
   void getStudentsUsesSearchWhenGiven() {
     // Arrange
-    when(studentRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase("john", "john"))
+    when(studentRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase("john",
+        "john"))
         .thenReturn(List.of(buildStudent(1L)));
 
     // Act
@@ -88,7 +89,8 @@ class StudentServiceTest {
   @Test
   void createStudentSavesAndReturnsStudent() {
     // Arrange
-    StudentRequest request = new StudentRequest("Sara", "Kim", "sara@gmail.com", LocalDate.of(2003, 5, 15));
+    StudentRequest request = new StudentRequest("Sara", "Kim", "sara@gmail.com",
+        LocalDate.of(2003, 5, 15));
     when(studentRepository.save(any(Student.class))).thenAnswer(inv -> inv.getArgument(0));
 
     // Act
@@ -104,7 +106,8 @@ class StudentServiceTest {
   void updateStudentChangesFields() {
     // Arrange
     Student student = buildStudent(1L);
-    StudentRequest request = new StudentRequest("Johnny", "Smith", "johnny@gmail.com", LocalDate.of(2001, 4, 12));
+    StudentRequest request = new StudentRequest("Johnny", "Smith", "johnny@gmail.com",
+        LocalDate.of(2001, 4, 12));
     when(studentRepository.findById(1L)).thenReturn(Optional.of(student));
 
     // Act

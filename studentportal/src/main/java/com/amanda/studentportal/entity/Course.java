@@ -7,12 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "course")
@@ -21,18 +20,18 @@ import java.util.Set;
 @NoArgsConstructor
 public class Course {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String courseCode;
+  @Column(nullable = false, unique = true)
+  private String courseCode;
 
-    @Column(nullable = false)
-    private String courseName;
+  @Column(nullable = false)
+  private String courseName;
 
-    private String description;
+  private String description;
 
-    @ManyToMany(mappedBy = "courses")
-    private Set<Student> students = new HashSet<>();
+  @ManyToMany(mappedBy = "courses")
+  private Set<Student> students = new HashSet<>();
 }

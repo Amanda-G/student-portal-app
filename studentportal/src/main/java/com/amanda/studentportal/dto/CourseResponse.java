@@ -8,4 +8,5 @@ public record CourseResponse(
     String courseName,
     String description,
     List<StudentSummary> students) {
+
 }

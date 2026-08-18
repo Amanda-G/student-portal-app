@@ -2,7 +2,8 @@
 
 take home is basically student + course management.
 
-don't overbuild this. main goal is show angular + spring boot working end to end and make sure CRUD, forms, routing, errors, rxjs etc are covered.
+don't overbuild this. main goal is show angular + spring boot working end to end and make sure CRUD,
+forms, routing, errors, rxjs etc are covered.
 
 ## Envisioning
 
@@ -33,8 +34,8 @@ top:
 - Students header
 - search
 - Add Student button
-- What if it returns hundreds of records? 
-- consider table headers with search ? almost like 
+- What if it returns hundreds of records?
+- consider table headers with search ? almost like
 
 table something like
 
@@ -53,8 +54,8 @@ search by name is enough probably.
 
 could make it partial search, so typing john returns John Smith, Johnny etc.
 
-not sure if search needs backend or frontend.
-for take home either is fine but backend query param looks a little better.
+not sure if search needs backend or frontend. for take home either is fine but backend query param
+looks a little better.
 
 `GET /api/students?search=john`
 
@@ -99,13 +100,12 @@ something like
 
 John Smith
 
-email
-DOB
+email DOB
 
 then enrolled courses under it.
 
 | Course Code | Course Name | Action |
-|---|---|---|
+|-------------|-------------|--------|
 
 action can be Remove.
 
@@ -159,9 +159,7 @@ Angular can show snackbar
 
 same style as student page.
 
-header
-search bar
-Add Course button
+header search bar Add Course button
 
 table
 
@@ -214,9 +212,7 @@ same component for create/edit.
 
 show
 
-course code
-course name
-description
+course code course name description
 
 then list students enrolled.
 
@@ -233,9 +229,9 @@ Students Enrolled: 8
 
 ## database
 
-
 Student
 ----------------
+
 - id
 - first_name
 - last_name
@@ -244,6 +240,7 @@ Student
 
 Course
 ----------------
+
 - id
 - course_code
 - course_name
@@ -251,6 +248,7 @@ Course
 
 student_course
 ----------------
+
 - student_id
 - course_id
 
@@ -258,7 +256,8 @@ many to many.
 
 need to decide whether to use direct `@ManyToMany` or make Enrollment entity.
 
-for this assignment direct many-to-many is probably enough because there is no grade/date/status fields.
+for this assignment direct many-to-many is probably enough because there is no grade/date/status
+fields.
 
 if later adding grade/semester then Enrollment entity makes more sense.
 
@@ -270,32 +269,19 @@ dont solve problem i dont have yet.
 
 probably
 
-controller
-service
-repository
-entity
-dto
-exception
+controller service repository entity dto exception
 
-StudentController
-StudentService
-StudentRepository
+StudentController StudentService StudentRepository
 
-CourseController
-CourseService
-CourseRepository
+CourseController CourseService CourseRepository
 
 dto maybe
 
-StudentRequest
-StudentResponse
-CourseRequest
-CourseResponse
+StudentRequest StudentResponse CourseRequest CourseResponse
 
 do not return entity directly if relationship causes recursion issues.
 
-could also keep dto simple and map manually.
-dont bring mapstruct for 4 fields.
+could also keep dto simple and map manually. dont bring mapstruct for 4 fields.
 
 ---
 
@@ -387,19 +373,23 @@ probably Angular Material because table, dialog, forms, buttons are already ther
 structure maybe
 
 students/
+
 - student-list
 - student-detail
 - student-form
 
 courses/
+
 - course-list
 - course-detail
 - course-form
 
 common/
+
 - confirm-dialog
 
 services/
+
 - student.service
 - course.service
 
@@ -426,7 +416,8 @@ HttpClient already gives Observable.
 
 student service methods return Observable<Student[]> etc.
 
-if need component communication, can use BehaviorSubject for refreshing student list / current state.
+if need component communication, can use BehaviorSubject for refreshing student list / current
+state.
 
 could do
 
@@ -443,17 +434,11 @@ Reactive Forms.
 
 Student form:
 
--- angular material
-firstName
-lastName
-email
-dateOfBirth
+-- angular material firstName lastName email dateOfBirth
 
 Course form:
 
-courseCode
-courseName
-description
+courseCode courseName description
 
 front end validation and error messages .
 
@@ -513,9 +498,7 @@ could seed some students/courses with data.sql.
 
 example:
 
-3 students
-4 courses
-couple enrollments
+3 students 4 courses couple enrollments
 
 makes UI immediately usable.
 
@@ -553,12 +536,7 @@ frontend
 
 ## UI feel
 
-clean nav
-material table
-forms
-dialogs
-snackbar
-loading spinner
+clean nav material table forms dialogs snackbar loading spinner
 
 make empty states.
 

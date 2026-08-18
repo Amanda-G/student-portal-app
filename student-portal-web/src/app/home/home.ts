@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
+import {Component} from '@angular/core';
+import {RouterLink} from '@angular/router';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-home',
@@ -9,4 +9,5 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {}
+export class Home {
+}

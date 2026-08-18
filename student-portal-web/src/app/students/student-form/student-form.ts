@@ -1,17 +1,23 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { StudentService } from '../../services/student.service';
+import {Component, inject, OnInit, signal} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators
+} from '@angular/forms';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {StudentService} from '../../services/student.service';
 
 function notInFuture(control: AbstractControl): ValidationErrors | null {
   const today = new Date().toISOString().split('T')[0];
   if (control.value && control.value > today) {
-    return { future: true };
+    return {future: true};
   }
   return null;
 }
@@ -30,22 +36,20 @@ function notInFuture(control: AbstractControl): ValidationErrors | null {
   styleUrl: './student-form.scss',
 })
 export class StudentForm implements OnInit {
-  private fb = inject(FormBuilder);
-  private studentService = inject(StudentService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private snackBar = inject(MatSnackBar);
-
   studentId: number | null = null;
   saving = signal(false);
   loading = signal(false);
-
+  private fb = inject(FormBuilder);
   form = this.fb.nonNullable.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     dateOfBirth: ['', [Validators.required, notInFuture]],
   });
+  private studentService = inject(StudentService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -60,7 +64,7 @@ export class StudentForm implements OnInit {
         this.loading.set(false);
       },
       error: () => {
-        this.snackBar.open('Could not load student', 'Close', { duration: 4000 });
+        this.snackBar.open('Could not load student', 'Close', {duration: 4000});
         this.router.navigate(['/students']);
       },
     });
@@ -79,13 +83,13 @@ export class StudentForm implements OnInit {
 
     call.subscribe({
       next: () => {
-        this.snackBar.open(this.studentId ? 'Student updated' : 'Student created', 'Close', { duration: 3000 });
+        this.snackBar.open(this.studentId ? 'Student updated' : 'Student created', 'Close', {duration: 3000});
         this.router.navigate(['/students']);
       },
       error: (err) => {
         this.saving.set(false);
-          const message = err?.error?.message ?? 'Could not save student';
-          this.snackBar.open(message, 'Close', { duration: 4000 });
+        const message = err?.error?.message ?? 'Could not save student';
+        this.snackBar.open(message, 'Close', {duration: 4000});
       },
     });
   }

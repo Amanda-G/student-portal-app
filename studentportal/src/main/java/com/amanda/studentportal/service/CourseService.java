@@ -43,7 +43,8 @@ public class CourseService {
 
   public CourseResponse updateCourse(Long id, CourseRequest request) {
     Course course = findCourse(id);
-    boolean codeTaken = courseRepository.existsByCourseCodeIgnoreCaseAndIdNot(request.courseCode(), id);
+    boolean codeTaken = courseRepository.existsByCourseCodeIgnoreCaseAndIdNot(request.courseCode(),
+        id);
     if (codeTaken) {
       throw new ConflictException("Course code " + request.courseCode() + " already exists");
     }

@@ -1,13 +1,13 @@
 @if (loading()) {
   <div class="spinner-wrap">
-    <mat-spinner diameter="36" />
+    <mat-spinner diameter="36"/>
   </div>
 } @else if (student(); as s) {
   <div class="page-header">
     <h1>{{ s.firstName }} {{ s.lastName }}</h1>
     <div class="header-actions">
-      <a mat-stroked-button [routerLink]="['/students', s.id, 'edit']">Edit</a>
-      <button mat-stroked-button (click)="deleteStudent()">Delete</button>
+      <a [routerLink]="['/students', s.id, 'edit']" mat-stroked-button>Edit</a>
+      <button (click)="deleteStudent()" mat-stroked-button>Delete</button>
     </div>
   </div>
 
@@ -33,11 +33,12 @@
           <mat-label>Enroll in a course</mat-label>
           <mat-select [(ngModel)]="selectedCourseId">
             @for (course of availableCourses(); track course.id) {
-              <mat-option [value]="course.id">{{ course.courseCode }} - {{ course.courseName }}</mat-option>
+              <mat-option [value]="course.id">{{ course.courseCode }}- {{ course.courseName }}
+              </mat-option>
             }
           </mat-select>
         </mat-form-field>
-        <button mat-flat-button (click)="enroll()" [disabled]="enrolling() || !selectedCourseId">
+        <button (click)="enroll()" [disabled]="enrolling() || !selectedCourseId" mat-flat-button>
           {{ enrolling() ? 'Enrolling...' : 'Enroll' }}
         </button>
       </div>
@@ -45,30 +46,30 @@
       @if (s.courses.length === 0) {
         <p class="empty-state">No courses enrolled</p>
       } @else {
-        <table mat-table [dataSource]="s.courses" class="mat-elevation-z1">
+        <table [dataSource]="s.courses" class="mat-elevation-z1" mat-table>
           <ng-container matColumnDef="courseCode">
-            <th mat-header-cell *matHeaderCellDef>Code</th>
-            <td mat-cell *matCellDef="let course">{{ course.courseCode }}</td>
+            <th *matHeaderCellDef mat-header-cell>Code</th>
+            <td *matCellDef="let course" mat-cell>{{ course.courseCode }}</td>
           </ng-container>
 
           <ng-container matColumnDef="courseName">
-            <th mat-header-cell *matHeaderCellDef>Course Name</th>
-            <td mat-cell *matCellDef="let course">
+            <th *matHeaderCellDef mat-header-cell>Course Name</th>
+            <td *matCellDef="let course" mat-cell>
               <a [routerLink]="['/courses', course.id]">{{ course.courseName }}</a>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let course">
-              <button mat-icon-button (click)="removeCourse(course)" aria-label="Remove course">
+            <th *matHeaderCellDef mat-header-cell></th>
+            <td *matCellDef="let course" mat-cell>
+              <button (click)="removeCourse(course)" aria-label="Remove course" mat-icon-button>
                 <mat-icon>close</mat-icon>
               </button>
             </td>
           </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
         </table>
       }
     </mat-tab>

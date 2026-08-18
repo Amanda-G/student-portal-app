@@ -10,4 +10,5 @@ public record ErrorResponse(
     String message,
     Map<String, String> fieldErrors,
     Instant timestamp) {
+
 }

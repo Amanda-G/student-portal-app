@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideRouter } from '@angular/router';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideRouter} from '@angular/router';
 
-import { StudentDetail } from './student-detail';
+import {StudentDetail} from './student-detail';
 
 describe('StudentDetail', () => {
   let component: StudentDetail;
@@ -31,11 +31,17 @@ describe('StudentDetail', () => {
       lastName: 'Smith',
       email: 'john@gmail.com',
       dateOfBirth: '2001-04-12',
-      courses: [{ id: 1, courseCode: 'CS101', courseName: 'Intro to Programming' }],
+      courses: [{id: 1, courseCode: 'CS101', courseName: 'Intro to Programming'}],
     });
     component.allCourses.set([
-      { id: 1, courseCode: 'CS101', courseName: 'Intro to Programming', description: '', students: [] },
-      { id: 2, courseCode: 'MATH201', courseName: 'Linear Algebra', description: '', students: [] },
+      {
+        id: 1,
+        courseCode: 'CS101',
+        courseName: 'Intro to Programming',
+        description: '',
+        students: []
+      },
+      {id: 2, courseCode: 'MATH201', courseName: 'Linear Algebra', description: '', students: []},
     ]);
 
     const available = component.availableCourses();

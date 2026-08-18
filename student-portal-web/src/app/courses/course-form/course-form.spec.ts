@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideRouter } from '@angular/router';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideRouter} from '@angular/router';
 
-import { CourseForm } from './course-form';
+import {CourseForm} from './course-form';
 
 describe('CourseForm', () => {
   let component: CourseForm;
@@ -29,7 +29,7 @@ describe('CourseForm', () => {
   });
 
   it('description is optional', () => {
-    component.form.patchValue({ courseCode: 'CS101', courseName: 'Intro' });
+    component.form.patchValue({courseCode: 'CS101', courseName: 'Intro'});
     expect(component.form.valid).toBe(true);
   });
 });

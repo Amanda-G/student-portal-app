@@ -2,10 +2,10 @@
 
 <mat-card class="form-card">
   <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="save()">
+    <form (ngSubmit)="save()" [formGroup]="form">
       <mat-form-field appearance="outline">
         <mat-label>First Name</mat-label>
-        <input matInput formControlName="firstName" />
+        <input formControlName="firstName" matInput/>
         @if (errorFor('firstName'); as error) {
           <mat-error>{{ error }}</mat-error>
         }
@@ -13,7 +13,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Last Name</mat-label>
-        <input matInput formControlName="lastName" />
+        <input formControlName="lastName" matInput/>
         @if (errorFor('lastName'); as error) {
           <mat-error>{{ error }}</mat-error>
         }
@@ -21,7 +21,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email" />
+        <input formControlName="email" matInput type="email"/>
         @if (errorFor('email'); as error) {
           <mat-error>{{ error }}</mat-error>
         }
@@ -29,7 +29,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Date of Birth</mat-label>
-        <input matInput formControlName="dateOfBirth" type="date" />
+        <input formControlName="dateOfBirth" matInput type="date"/>
         @if (errorFor('dateOfBirth'); as error) {
           <mat-error>{{ error }}</mat-error>
         }
@@ -37,7 +37,7 @@
 
       <div class="form-actions">
         <a mat-button routerLink="/students">Cancel</a>
-        <button mat-flat-button type="submit" [disabled]="saving()">
+        <button [disabled]="saving()" mat-flat-button type="submit">
           {{ saving() ? 'Saving...' : 'Save' }}
         </button>
       </div>

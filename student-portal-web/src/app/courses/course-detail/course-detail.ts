@@ -1,15 +1,15 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialog } from '@angular/material/dialog';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { Course } from '../../models/course';
-import { CourseService } from '../../services/course.service';
-import { ConfirmDialog } from '../../common/confirm-dialog/confirm-dialog';
+import {Component, inject, OnInit, signal} from '@angular/core';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatDialog} from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
+import {Course} from '../../models/course';
+import {CourseService} from '../../services/course.service';
+import {ConfirmDialog} from '../../common/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-course-detail',
@@ -25,16 +25,14 @@ import { ConfirmDialog } from '../../common/confirm-dialog/confirm-dialog';
   styleUrl: './course-detail.scss',
 })
 export class CourseDetail implements OnInit {
+  course = signal<Course | null>(null);
+  loading = signal(true);
+  displayedColumns = ['name', 'email'];
   private courseService = inject(CourseService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
-
-  course = signal<Course | null>(null);
-  loading = signal(true);
-
-  displayedColumns = ['name', 'email'];
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -44,7 +42,7 @@ export class CourseDetail implements OnInit {
         this.loading.set(false);
       },
       error: () => {
-        this.snackBar.open('Could not load course', 'Close', { duration: 4000 });
+        this.snackBar.open('Could not load course', 'Close', {duration: 4000});
         this.router.navigate(['/courses']);
       },
     });
@@ -67,12 +65,12 @@ export class CourseDetail implements OnInit {
       }
       this.courseService.deleteCourse(course.id).subscribe({
         next: () => {
-          this.snackBar.open('Course deleted', 'Close', { duration: 3000 });
+          this.snackBar.open('Course deleted', 'Close', {duration: 3000});
           this.router.navigate(['/courses']);
         },
         error: (err) => {
           const message = err?.error?.message ?? 'Could not delete course';
-          this.snackBar.open(message, 'Close', { duration: 4000 });
+          this.snackBar.open(message, 'Close', {duration: 4000});
         },
       });
     });

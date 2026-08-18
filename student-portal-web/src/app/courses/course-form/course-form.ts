@@ -1,12 +1,12 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CourseService } from '../../services/course.service';
+import {Component, inject, OnInit, signal} from '@angular/core';
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {CourseService} from '../../services/course.service';
 
 @Component({
   selector: 'app-course-form',
@@ -22,21 +22,19 @@ import { CourseService } from '../../services/course.service';
   styleUrl: './course-form.scss',
 })
 export class CourseForm implements OnInit {
-  private fb = inject(FormBuilder);
-  private courseService = inject(CourseService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private snackBar = inject(MatSnackBar);
-
   courseId: number | null = null;
   saving = signal(false);
   loading = signal(false);
-
+  private fb = inject(FormBuilder);
   form = this.fb.nonNullable.group({
     courseCode: ['', Validators.required],
     courseName: ['', Validators.required],
     description: [''],
   });
+  private courseService = inject(CourseService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -51,7 +49,7 @@ export class CourseForm implements OnInit {
         this.loading.set(false);
       },
       error: () => {
-        this.snackBar.open('Could not load course', 'Close', { duration: 4000 });
+        this.snackBar.open('Could not load course', 'Close', {duration: 4000});
         this.router.navigate(['/courses']);
       },
     });
@@ -70,13 +68,13 @@ export class CourseForm implements OnInit {
 
     call.subscribe({
       next: () => {
-        this.snackBar.open(this.courseId ? 'Course updated' : 'Course created', 'Close', { duration: 3000 });
+        this.snackBar.open(this.courseId ? 'Course updated' : 'Course created', 'Close', {duration: 3000});
         this.router.navigate(['/courses']);
       },
       error: (err) => {
         this.saving.set(false);
         const message = err?.error?.message ?? 'Could not save course';
-        this.snackBar.open(message, 'Close', { duration: 4000 });
+        this.snackBar.open(message, 'Close', {duration: 4000});
       },
     });
   }

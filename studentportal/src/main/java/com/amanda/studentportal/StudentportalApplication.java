@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class StudentportalApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(StudentportalApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(StudentportalApplication.class, args);
+  }
 
 }

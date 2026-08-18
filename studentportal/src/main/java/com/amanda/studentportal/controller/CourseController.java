@@ -21,40 +21,41 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/courses")
 public class CourseController {
 
-    private final CourseService courseService;
+  private final CourseService courseService;
 
-    public CourseController(CourseService courseService) {
-        this.courseService = courseService;
-    }
+  public CourseController(CourseService courseService) {
+    this.courseService = courseService;
+  }
 
-    @GetMapping
-    public ResponseEntity<List<CourseResponse>> getCourses(@RequestParam(required = false) String search) {
-        List<CourseResponse> courses = courseService.getCourses(search);
-        return ResponseEntity.ok(courses);
-    }
+  @GetMapping
+  public ResponseEntity<List<CourseResponse>> getCourses(
+      @RequestParam(required = false) String search) {
+    List<CourseResponse> courses = courseService.getCourses(search);
+    return ResponseEntity.ok(courses);
+  }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CourseResponse> getCourse(@PathVariable Long id) {
-        CourseResponse course = courseService.getCourse(id);
-        return ResponseEntity.ok(course);
-    }
+  @GetMapping("/{id}")
+  public ResponseEntity<CourseResponse> getCourse(@PathVariable Long id) {
+    CourseResponse course = courseService.getCourse(id);
+    return ResponseEntity.ok(course);
+  }
 
-    @PostMapping
-    public ResponseEntity<CourseResponse> createCourse(@Valid @RequestBody CourseRequest request) {
-        CourseResponse created = courseService.createCourse(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
-    }
+  @PostMapping
+  public ResponseEntity<CourseResponse> createCourse(@Valid @RequestBody CourseRequest request) {
+    CourseResponse created = courseService.createCourse(request);
+    return ResponseEntity.status(HttpStatus.CREATED).body(created);
+  }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CourseResponse> updateCourse(@PathVariable Long id,
-            @Valid @RequestBody CourseRequest request) {
-        CourseResponse updated = courseService.updateCourse(id, request);
-        return ResponseEntity.ok(updated);
-    }
+  @PutMapping("/{id}")
+  public ResponseEntity<CourseResponse> updateCourse(@PathVariable Long id,
+      @Valid @RequestBody CourseRequest request) {
+    CourseResponse updated = courseService.updateCourse(id, request);
+    return ResponseEntity.ok(updated);
+  }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
-        courseService.deleteCourse(id);
-        return ResponseEntity.noContent().build();
-    }
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
+    courseService.deleteCourse(id);
+    return ResponseEntity.noContent().build();
+  }
 }
